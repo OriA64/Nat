@@ -146,7 +146,7 @@ html, body {
     border: 2px solid rgba(255,105,180,0.55);
     background: transparent; /* transparent box */
     color: rgba(255,105,180,0.9);
-    font-size: 35px;
+    font-size: 22px;
     line-height: 1; /* keep box snug to text */
     font-weight: 700;
     box-shadow: 0 2px 6px rgba(0,0,0,0.12);
@@ -200,7 +200,7 @@ html, body {
         left: calc(env(safe-area-inset-left) + 6px);
         right: calc(env(safe-area-inset-right) + 6px);
         transform: none;
-        font-size: 25px; /* large base size for mobile */
+        font-size: 33px; /* large base size for mobile */
         /* Take all available width between left/right; avoid additional max-width cap */
         max-width: none;
         /* Allow wrapping so long lines don't overflow off-screen */
