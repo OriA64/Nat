@@ -103,8 +103,8 @@ html, body {
 /* On-screen D-pad 10px below vertical center */
 #dpad {
     position: fixed;
-    top: calc(50% + 100px);
-    left: calc(50% - 20px);
+    top: calc(50% + 300px);
+    left: calc(50% - 100px);
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
