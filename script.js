@@ -8,7 +8,8 @@ let npcs = [
         "I love you nat!",
         "do u like my little wiggle",
         "this is my world now teehee",
-        "you wanna know my secret",
+        "you wanna know my secret?",
+        "idk i dont have any I love you sososo much nat",
         "k byeeee"
     ], currentLine: -1, isInteracting: false, gif: 'chiikawa-dancing.gif' },
     { id: 'npc3', lines: ["moo moo", "Im a cow :3", "I tried to make this look cutesy", "so I hope you like the little game I made", "I completely learned html, css, and java script for this", "I know I might have spoiled it earlier", "but i still hope you like it <3", "anyways...", "my dumb fucking son wont stop complaining", '"oooh stop eating grass"', "just hand me another beer holy shit", "hes fucking purple like who made him like that", "go talk to him" ], currentLine: -1, isInteracting: false, gif: 'cowgif.gif' },
@@ -631,7 +632,7 @@ function drawArrow(ctx, fromX, fromY, toX, toY, options = {}) {
 
 // Draw only an arrow head (triangle) at a given position and angle
 function drawArrowHead(ctx, x, y, angle, options = {}) {
-    const { color = 'rgba(0,0,0,0.55)', headLength = 12, width = 3 } = options;
+    const { color = 'rgba(255,105,180,0.85)', headLength = 12, width = 3 } = options;
     ctx.save();
     ctx.fillStyle = color;
     ctx.strokeStyle = color;
@@ -680,7 +681,7 @@ function drawCompass() {
         const headY = playerY + Math.sin(angle) * radius;
 
         drawArrowHead(compassCtx, headX, headY, angle, {
-            color: 'rgba(0,0,0,0.55)',
+            color: 'rgba(255,105,180,0.9)',
             headLength: 10,
             width: 3
         });
