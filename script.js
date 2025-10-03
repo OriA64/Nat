@@ -152,7 +152,7 @@ function preloadImages() {
     window.onload = function () {
         preloadImages();
         let loadingText = document.querySelector('#loading-screen h1');
-        let loadingStates = ["Loading.", "Loading..", "Loading..."];
+        let loadingStates = ["Loading3.", "Loading3..", "Loading2..."];
         let loadingIndex = 0;
 
         // Function to cycle through "Loading.", "Loading..", "Loading..."

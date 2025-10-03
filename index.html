@@ -32,6 +32,18 @@
 
     <div id="npc-image"></div> <!-- NPC Image above the dialogue box -->
     <div id="dialogue-box"></div> <!-- Dialogue Box at the bottom of the screen -->
+    
+    <!-- Mobile Controls -->
+    <div id="mobile-controls" aria-label="Mobile controls" role="group">
+        <div class="dpad">
+            <button id="btn-up" class="control" aria-label="Up">▲</button>
+            <div class="spacer"></div>
+            <button id="btn-left" class="control" aria-label="Left">◀</button>
+            <button id="btn-down" class="control" aria-label="Down">▼</button>
+            <button id="btn-right" class="control" aria-label="Right">▶</button>
+        </div>
+        <button id="btn-interact" class="control action" aria-label="Interact">X</button>
+    </div>
 
     <audio id="background-music" loop autoplay>
         <source src="background.mp3" type="audio/mpeg">
