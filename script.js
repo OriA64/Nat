@@ -1,5 +1,5 @@
 let npcs = [
-    { id: 'npc1', lines: ["Hihihihi!!!", "I hope your birthday is going well <33", "And I know that sometimes shit gets rough", "but Im very proud of you for pushing through", "I dont really know what a chicken sounds like", "bkaak bkaak", "I love you so so much"], currentLine: -1, isInteracting: false, gif: 'chickengif.gif' },
+    { id: 'npc1', lines: ["Hihihihi!!!", "I hope your birthday is going well <33", "And I know that sometimes shit gets rough", "but Im very proud of you for pushing through", "you are so strong and I love you so much", "I love yououuoouu", "I dont really know what a chicken sounds like", "bkaak bkaak", "I love you so so much"], currentLine: -1, isInteracting: false, gif: 'chickengif.gif' },
     { id: 'npc2', lines: [
         "HAIIII",
         "its me chiikawa",
