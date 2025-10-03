@@ -193,8 +193,9 @@ html, body {
         bottom: auto;
         left: 50%;
         transform: translateX(-50%);
-        font-size: 260x; /* larger starting size; JS will auto-scale down if needed */
+        font-size: 160x; /* larger starting size; JS will auto-scale down if needed */
         max-width: 94%;
         padding: 16px 24px;
     }
 }
+
