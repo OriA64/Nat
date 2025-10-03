@@ -81,6 +81,11 @@ html, body {
     letter-spacing: 10px; /* This adds space between each period */
 }
 
+/* Loading subtext spacing */
+#loading-subtext {
+    margin-top: 50px;
+}
+
 #dialogue-box {
     position: fixed;
     bottom: 20px;
