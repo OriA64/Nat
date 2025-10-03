@@ -95,10 +95,28 @@ let npcInteractions = 0;
 const totalNPCs = npcs.length;
 const npcInteractionCounter = document.getElementById('npc-interaction-counter');
 let interactedNPCs = new Set(); // To track unique NPCs interacted with
+let baseDialogueFontPx = 74; // default; will be detected on load
 
 function updateNPCInteractionCounter() {
     const npcInteractionCounter = document.getElementById('npc-interaction-counter');
     npcInteractionCounter.textContent = `NPCs interacted with: ${npcInteractions} / ${totalNPCs}`;
+}
+
+// Reduce dialogue font size until the content fits within the box width (no overflow)
+function fitDialogueToWidth() {
+    const el = document.getElementById('dialogue-box');
+    if (!el || el.style.display === 'none') return;
+    // Ensure it's single line; CSS already uses white-space: nowrap
+    // Shrink font until scrollWidth fits clientWidth or we hit a minimum.
+    let iterations = 0;
+    const maxIterations = 200;
+    let fontSize = parseFloat(window.getComputedStyle(el).fontSize) || baseDialogueFontPx;
+    const minFont = 16; // do not go smaller than this
+    while (el.scrollWidth > el.clientWidth && fontSize > minFont && iterations < maxIterations) {
+        fontSize -= 1;
+        el.style.fontSize = fontSize + 'px';
+        iterations++;
+    }
 }
 
 // Ensure the player starts with the correct initial sprite
@@ -174,12 +192,24 @@ function preloadImages() {
         // Initialize NPCs, player, and other game elements
         initializeNPCs();
         initializePlayer();
+        // detect the base dialogue font size from CSS to use for scaling resets
+        const dlg = document.getElementById('dialogue-box');
+        if (dlg) {
+            const computed = window.getComputedStyle(dlg).fontSize;
+            const parsed = parseFloat(computed);
+            if (!isNaN(parsed)) baseDialogueFontPx = parsed;
+        }
         
         // Start the background music
         const backgroundMusic = document.getElementById('background-music');
         backgroundMusic.volume = 0.5; // Adjust volume if needed
         backgroundMusic.play(); // Play the music when the page loads
         updateNPCInteractionCounter(); // Initialize the counter when the page loads
+
+        // Re-fit dialogue on viewport changes
+        window.addEventListener('resize', () => {
+            fitDialogueToWidth();
+        });
     };
 
 
@@ -339,6 +369,8 @@ function displayNPCText() {
         dialogueBox.textContent = ''; // Clear the dialogue box before displaying new text
         dialogueBox.style.display = 'block'; // Show the dialogue box
         isTextComplete = false; // Reset the flag before starting to show the next line
+        // reset to base size before fitting while typing
+        dialogueBox.style.fontSize = baseDialogueFontPx + 'px';
 
         // Display each letter with a delay
         let currentIndex = 0;
@@ -347,6 +379,8 @@ function displayNPCText() {
                 // Append the next character (including spaces) to the dialogue box
                 dialogueBox.textContent += text[currentIndex];
                 currentIndex++;
+                // Fit the text to the box width as it grows
+                fitDialogueToWidth();
                 setTimeout(showNextLetter, 20); // 0.02 seconds delay between each letter
             } else {
                 isTextComplete = true; // Mark text as fully displayed
