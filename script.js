@@ -8,8 +8,7 @@ let npcs = [
         "I love you nat!",
         "do u like my little wiggle",
         "this is my world now teehee",
-        "press X to hear my secrets... or not",
-        "idk I dont have any secrets",
+        "you wanna know my secret",
         "k byeeee"
     ], currentLine: -1, isInteracting: false, gif: 'chiikawa-dancing.gif' },
     { id: 'npc3', lines: ["moo moo", "Im a cow :3", "I tried to make this look cutesy", "so I hope you like the little game I made", "I completely learned html, css, and java script for this", "I know I might have spoiled it earlier", "but i still hope you like it <3", "anyways...", "my dumb fucking son wont stop complaining", '"oooh stop eating grass"', "just hand me another beer holy shit", "hes fucking purple like who made him like that", "go talk to him" ], currentLine: -1, isInteracting: false, gif: 'cowgif.gif' },

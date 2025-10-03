@@ -122,12 +122,12 @@ html, body {
     width: 56px;
     height: 56px;
     border-radius: 12px;
-    border: 2px solid rgba(0,0,0,0.15);
-    background: rgba(255,255,255,0.12); /* very see-through */
+    border: 2px solid #ff3d9a;
+    background: #ff69b4; /* pink */
     font-size: 24px;
-    color: rgba(0,0,0,0.6);
+    color: #ffffff;
     box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-    opacity: 0.9; /* 10% opacity */
+    opacity: 0.9;
 }
 
 #dpad button:active { transform: scale(0.96); }
@@ -141,9 +141,9 @@ html, body {
     width: 64px;
     height: 64px;
     border-radius: 12px;
-    border: 2px solid rgba(0,0,0,0.15);
-    background: rgba(255,255,255,0.12);
-    color: rgba(0,0,0,0.6);
+    border: 2px solid #ff3d9a;
+    background: #ff69b4; /* pink */
+    color: #ffffff;
     font-size: 26px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.12);
     opacity: 0.9; /* match D-pad current opacity */
