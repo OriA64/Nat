@@ -152,7 +152,7 @@ function preloadImages() {
     window.onload = function () {
         preloadImages();
         let loadingText = document.querySelector('#loading-screen h1');
-        let loadingStates = ["Loading2.", "Loading..", "Loading..."];
+        let loadingStates = ["Loading.", "Loading..", "Loading..."];
         let loadingIndex = 0;
 
         // Function to cycle through "Loading.", "Loading..", "Loading..."
@@ -454,4 +454,24 @@ document.addEventListener('keydown', function (event) {
     }
 
     map.forEach(({ id, dir }) => addPressListeners(document.getElementById(id), dir));
+})();
+
+// On-screen Interact button (acts like pressing 'X')
+(function setupInteractButton() {
+    const btn = document.getElementById('btn-interact');
+    if (!btn) return;
+
+    const trigger = (e) => {
+        e.preventDefault();
+        if (activeNPC) {
+            if (isTextComplete) {
+                advanceNPCText();
+            }
+        } else {
+            interactWithNPC();
+        }
+    };
+
+    btn.addEventListener('click', trigger);
+    btn.addEventListener('touchstart', trigger, { passive: false });
 })();
