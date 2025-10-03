@@ -191,11 +191,13 @@ html, body {
     #dialogue-box {
         top: calc(env(safe-area-inset-top) + 12px);
         bottom: auto;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 30px; /* large base size for mobile */
-        /* Keep the text within the viewport width, accounting for notches */
-        max-width: calc(100vw - 24px - env(safe-area-inset-left) - env(safe-area-inset-right));
+        /* Span almost full width, respecting iPhone safe areas */
+        left: calc(env(safe-area-inset-left) + 6px);
+        right: calc(env(safe-area-inset-right) + 6px);
+        transform: none;
+        font-size: 180px; /* large base size for mobile */
+        /* Take all available width between left/right; avoid additional max-width cap */
+        max-width: none;
         /* Allow wrapping so long lines don't overflow off-screen */
         white-space: normal;
         overflow-wrap: anywhere;
@@ -203,6 +205,7 @@ html, body {
         /* Limit height so it doesn't exceed the screen; wrap instead of overflow */
         max-height: 45vh;
         overflow-y: visible;
-        padding: 16px 24px;
+        padding: 12px 14px; /* slimmer horizontal padding for more text width */
+        box-sizing: border-box;
     }
 }
