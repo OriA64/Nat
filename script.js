@@ -623,7 +623,7 @@ function drawCompass() {
     const playerX = playerRect.left + playerRect.width / 2;
     const playerY = playerRect.top + playerRect.height / 2;
 
-    // Draw arrow to each NPC
+    // Draw short directional arrow (max 10px) toward each NPC
     npcs.forEach(npc => {
         const npcEl = document.getElementById(npc.id);
         if (!npcEl) return;
@@ -633,11 +633,17 @@ function drawCompass() {
 
         // Skip if NPC is exactly at player position (avoid NaN angles)
         if (Math.abs(npcX - playerX) < 0.5 && Math.abs(npcY - playerY) < 0.5) return;
+        const dx = npcX - playerX;
+        const dy = npcY - playerY;
+        const angle = Math.atan2(dy, dx);
+        const len = 10; // max arrow length in pixels
+        const toX = playerX + Math.cos(angle) * len;
+        const toY = playerY + Math.sin(angle) * len;
 
-        drawArrow(compassCtx, playerX, playerY, npcX, npcY, {
-            color: 'rgba(0,0,0,0.35)',
+        drawArrow(compassCtx, playerX, playerY, toX, toY, {
+            color: 'rgba(0,0,0,0.45)',
             width: 3,
-            headLength: 12
+            headLength: 8
         });
     });
 }
