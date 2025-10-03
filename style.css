@@ -193,9 +193,16 @@ html, body {
         bottom: auto;
         left: 50%;
         transform: translateX(-50%);
-        font-size: 160x; /* larger starting size; JS will auto-scale down if needed */
-        max-width: 94%;
+        font-size: 180px; /* large base size for mobile */
+        /* Keep the text within the viewport width, accounting for notches */
+        max-width: calc(100vw - 24px - env(safe-area-inset-left) - env(safe-area-inset-right));
+        /* Allow wrapping so long lines don't overflow off-screen */
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        /* Limit height so it doesn't exceed the screen; wrap instead of overflow */
+        max-height: 45vh;
+        overflow-y: visible;
         padding: 16px 24px;
     }
 }
-
