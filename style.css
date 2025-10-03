@@ -195,7 +195,7 @@ html, body {
         left: calc(env(safe-area-inset-left) + 6px);
         right: calc(env(safe-area-inset-right) + 6px);
         transform: none;
-        font-size: 180px; /* large base size for mobile */
+        font-size: 25px; /* large base size for mobile */
         /* Take all available width between left/right; avoid additional max-width cap */
         max-width: none;
         /* Allow wrapping so long lines don't overflow off-screen */
