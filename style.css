@@ -165,3 +165,12 @@ html, body {
 #npc9 { left: 1100px; top: 2600px; width: 45px; height: 45px; }
 #npc10 { left: 870px; top: 2800px; width: 45px; height: 45px; }
 #npc11 { left: 1000px; top: 2800px; width: 45px; height: 45px; }
+
+/* Hide touch controls by default (desktop) */
+#dpad, #btn-interact { display: none; }
+
+/* Show touch controls on touch devices (iPhone/iPad, Android) */
+@media (hover: none) and (pointer: coarse) {
+    #dpad { display: flex; }
+    #btn-interact { display: block; }
+}
