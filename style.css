@@ -185,3 +185,16 @@ html, body {
     #dpad { display: flex; }
     #btn-interact { display: block; }
 }
+
+/* On touch devices, place dialogue at the top and make it larger */
+@media (hover: none) and (pointer: coarse) {
+    #dialogue-box {
+        top: calc(env(safe-area-inset-top) + 12px);
+        bottom: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 200px; /* larger starting size; JS will auto-scale down if needed */
+        max-width: 94%;
+        padding: 16px 24px;
+    }
+}
