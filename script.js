@@ -102,21 +102,60 @@ function updateNPCInteractionCounter() {
     npcInteractionCounter.textContent = `NPCs interacted with: ${npcInteractions} / ${totalNPCs}`;
 }
 
-// Reduce dialogue font size until the content fits within the box width (no overflow)
+// Helper: compute a conservative target width for the dialogue text
+function getDialogueTargetWidth(el) {
+    // Use viewport width with a safety margin so we shrink earlier, and account for CSS max-width: 90%
+    const vwTarget = window.innerWidth * 0.9; // matches CSS max-width: 90%
+    const elWidth = el.clientWidth || vwTarget;
+    // Take the smaller of element width and viewport target, then add a margin (75%) to start shrinking earlier
+    return Math.min(elWidth, vwTarget) * 0.75;
+}
+
+// Reduce dialogue font size until the content fits within the target width (no overflow)
 function fitDialogueToWidth() {
     const el = document.getElementById('dialogue-box');
     if (!el || el.style.display === 'none') return;
     // Ensure it's single line; CSS already uses white-space: nowrap
-    // Shrink font until scrollWidth fits clientWidth or we hit a minimum.
+    // Shrink font until scrollWidth fits within a margin of targetWidth or we hit a minimum.
     let iterations = 0;
     const maxIterations = 200;
     let fontSize = parseFloat(window.getComputedStyle(el).fontSize) || baseDialogueFontPx;
-    const minFont = 16; // do not go smaller than this
-    while (el.scrollWidth > el.clientWidth && fontSize > minFont && iterations < maxIterations) {
+    const minFont = 12; // allow a bit smaller on small iPhones
+    const targetWidth = getDialogueTargetWidth(el);
+    while (el.scrollWidth > targetWidth && fontSize > minFont && iterations < maxIterations) {
         fontSize -= 1;
         el.style.fontSize = fontSize + 'px';
         iterations++;
     }
+}
+
+// Pre-fit: set font size to fit a given text completely before we start the typewriter
+function prefitDialogueForText(fullText) {
+    const el = document.getElementById('dialogue-box');
+    if (!el) return;
+    // Temporarily set the full text to measure
+    const previous = el.textContent;
+    el.textContent = fullText;
+    el.style.fontSize = baseDialogueFontPx + 'px';
+    let iterations = 0;
+    const maxIterations = 200;
+    let fontSize = parseFloat(window.getComputedStyle(el).fontSize) || baseDialogueFontPx;
+    const minFont = 12;
+    const targetWidth = getDialogueTargetWidth(el);
+    // Quick jump: estimate scale factor to get into range faster, then fine-tune
+    const measured = el.scrollWidth || 1;
+    if (measured > 0) {
+        const factor = (targetWidth / measured) * 0.96; // 4% extra safety
+        fontSize = Math.max(minFont, Math.min(baseDialogueFontPx, fontSize * factor));
+        el.style.fontSize = fontSize + 'px';
+    }
+    while (el.scrollWidth > targetWidth && fontSize > minFont && iterations < maxIterations) {
+        fontSize -= 1;
+        el.style.fontSize = fontSize + 'px';
+        iterations++;
+    }
+    // Restore for typewriter
+    el.textContent = '';
 }
 
 // Ensure the player starts with the correct initial sprite
@@ -369,8 +408,8 @@ function displayNPCText() {
         dialogueBox.textContent = ''; // Clear the dialogue box before displaying new text
         dialogueBox.style.display = 'block'; // Show the dialogue box
         isTextComplete = false; // Reset the flag before starting to show the next line
-        // reset to base size before fitting while typing
-        dialogueBox.style.fontSize = baseDialogueFontPx + 'px';
+        // Pre-fit font size based on the full line so it starts smaller if needed
+        prefitDialogueForText(text);
 
         // Display each letter with a delay
         let currentIndex = 0;
@@ -379,7 +418,7 @@ function displayNPCText() {
                 // Append the next character (including spaces) to the dialogue box
                 dialogueBox.textContent += text[currentIndex];
                 currentIndex++;
-                // Fit the text to the box width as it grows
+                // Keep fitting during typing to be safe on small screens
                 fitDialogueToWidth();
                 setTimeout(showNextLetter, 20); // 0.02 seconds delay between each letter
             } else {
