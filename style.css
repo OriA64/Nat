@@ -95,7 +95,7 @@ html, body {
     z-index: 1000;
     display: inline-block;
     max-width: 90%;
-    font-size: 74px; /* Increase font size for larger text */
+    font-size: 148px; /* doubled from 74px for larger initial text */
     white-space: nowrap; /* Prevent text from wrapping */
     display: none;
 }
