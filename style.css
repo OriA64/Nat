@@ -138,13 +138,15 @@ html, body {
     position: fixed;
     top: calc(50% + 220px); /* align vertically with D-pad */
     left: calc(50% + 60px); /* to the right of D-pad */
-    width: 64px;
-    height: 64px;
+    display: inline-block; /* let the box wrap the text */
+    padding: 10px 16px; /* comfortable touch target */
     border-radius: 12px;
     border: 2px solid rgba(255,105,180,0.55);
     background: transparent; /* transparent box */
     color: rgba(255,105,180,0.9);
-    font-size: 26px;
+    font-size: 22px;
+    line-height: 1; /* keep box snug to text */
+    font-weight: 700;
     box-shadow: 0 2px 6px rgba(0,0,0,0.12);
     opacity: 0.9; /* match D-pad current opacity */
     z-index: 1100;
