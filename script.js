@@ -612,6 +612,28 @@ function drawArrow(ctx, fromX, fromY, toX, toY, options = {}) {
     ctx.restore();
 }
 
+// Draw only an arrow head (triangle) at a given position and angle
+function drawArrowHead(ctx, x, y, angle, options = {}) {
+    const { color = 'rgba(0,0,0,0.55)', headLength = 12, width = 3 } = options;
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(
+        x - headLength * Math.cos(angle - Math.PI / 6),
+        y - headLength * Math.sin(angle - Math.PI / 6)
+    );
+    ctx.lineTo(
+        x - headLength * Math.cos(angle + Math.PI / 6),
+        y - headLength * Math.sin(angle + Math.PI / 6)
+    );
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+}
+
 function drawCompass() {
     if (!compassCtx) return;
     // Clear
@@ -623,7 +645,7 @@ function drawCompass() {
     const playerX = playerRect.left + playerRect.width / 2;
     const playerY = playerRect.top + playerRect.height / 2;
 
-    // Draw short directional arrow (max 10px) toward each NPC
+    // Draw only arrow heads positioned 60px from player toward each NPC
     npcs.forEach(npc => {
         const npcEl = document.getElementById(npc.id);
         if (!npcEl) return;
@@ -636,14 +658,14 @@ function drawCompass() {
         const dx = npcX - playerX;
         const dy = npcY - playerY;
         const angle = Math.atan2(dy, dx);
-        const len = 10; // max arrow length in pixels
-        const toX = playerX + Math.cos(angle) * len;
-        const toY = playerY + Math.sin(angle) * len;
+        const radius = 60; // place the arrow head 60px from the player
+        const headX = playerX + Math.cos(angle) * radius;
+        const headY = playerY + Math.sin(angle) * radius;
 
-        drawArrow(compassCtx, playerX, playerY, toX, toY, {
-            color: 'rgba(0,0,0,0.45)',
-            width: 3,
-            headLength: 8
+        drawArrowHead(compassCtx, headX, headY, angle, {
+            color: 'rgba(0,0,0,0.55)',
+            headLength: 10,
+            width: 3
         });
     });
 }
