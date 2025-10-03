@@ -107,6 +107,7 @@ const totalNPCs = npcs.length;
 const npcInteractionCounter = document.getElementById('npc-interaction-counter');
 let interactedNPCs = new Set(); // To track unique NPCs interacted with
 let baseDialogueFontPx = 74; // default; will be detected on load
+const isTouchDevice = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
 function updateNPCInteractionCounter() {
     const npcInteractionCounter = document.getElementById('npc-interaction-counter');
@@ -256,10 +257,12 @@ function preloadImages() {
         backgroundMusic.play(); // Play the music when the page loads
         updateNPCInteractionCounter(); // Initialize the counter when the page loads
 
-        // Re-fit dialogue on viewport changes
-        window.addEventListener('resize', () => {
-            fitDialogueToWidth();
-        });
+        // Re-fit dialogue on viewport changes (desktop only)
+        if (!isTouchDevice) {
+            window.addEventListener('resize', () => {
+                fitDialogueToWidth();
+            });
+        }
     };
 
 
@@ -421,8 +424,10 @@ function displayNPCText() {
         dialogueBox.textContent = ''; // Clear the dialogue box before displaying new text
         dialogueBox.style.display = 'block'; // Show the dialogue box
         isTextComplete = false; // Reset the flag before starting to show the next line
-        // Pre-fit font size based on the full line so it starts smaller if needed
-        prefitDialogueForText(text);
+        // On desktop, pre-fit font size so it starts smaller if needed. On touch, keep CSS-defined size.
+        if (!isTouchDevice) {
+            prefitDialogueForText(text);
+        }
 
         // Display each letter with a delay
         let currentIndex = 0;
@@ -431,8 +436,10 @@ function displayNPCText() {
                 // Append the next character (including spaces) to the dialogue box
                 dialogueBox.textContent += text[currentIndex];
                 currentIndex++;
-                // Keep fitting during typing to be safe on small screens
-                fitDialogueToWidth();
+                // Desktop only: keep fitting during typing
+                if (!isTouchDevice) {
+                    fitDialogueToWidth();
+                }
                 setTimeout(showNextLetter, 20); // 0.02 seconds delay between each letter
             } else {
                 isTextComplete = true; // Mark text as fully displayed
