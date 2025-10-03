@@ -152,7 +152,7 @@ function preloadImages() {
     window.onload = function () {
         preloadImages();
         let loadingText = document.querySelector('#loading-screen h1');
-        let loadingStates = ["Loading.", "Loading..", "Loading..."];
+        let loadingStates = ["Loading2.", "Loading..", "Loading..."];
         let loadingIndex = 0;
 
         // Function to cycle through "Loading.", "Loading..", "Loading..."
@@ -425,8 +425,33 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
-// Stop movement when the key is released
-document.addEventListener('keyup', function () {
-    stopMoving();
-});
+    // Stop movement when the key is released
+    document.addEventListener('keyup', function () {
+        stopMoving();
+    });
 
+// On-screen D-pad handlers (mouse + touch)
+(function setupDpad() {
+    const map = [
+        { id: 'btn-up', dir: 'up' },
+        { id: 'btn-down', dir: 'down' },
+        { id: 'btn-left', dir: 'left' },
+        { id: 'btn-right', dir: 'right' }
+    ];
+
+    function addPressListeners(el, direction) {
+        if (!el) return;
+        const start = (e) => { e.preventDefault(); startMoving(direction); };
+        const stop = (e) => { e.preventDefault(); stopMoving(); };
+
+        el.addEventListener('mousedown', start);
+        el.addEventListener('mouseup', stop);
+        el.addEventListener('mouseleave', stop);
+
+        el.addEventListener('touchstart', start, { passive: false });
+        el.addEventListener('touchend', stop, { passive: false });
+        el.addEventListener('touchcancel', stop, { passive: false });
+    }
+
+    map.forEach(({ id, dir }) => addPressListeners(document.getElementById(id), dir));
+})();
